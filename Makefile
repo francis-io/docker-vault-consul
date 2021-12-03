@@ -3,12 +3,18 @@ help: ## This help.
 
 .DEFAULT_GOAL := help
 
-.PHONY:start
+.PHONY:start-dev
 start-dev: ##
 	@bash bin/start-dev.sh || true # dirty way to supress error if container does not exist
 
-.PHONY: stop
+.PHONY: stop-dev
 stop-dev:
 	@bash bin/stop-dev.sh || true # dirty way to supress error if container does not exist
 
+.PHONY: start
+start:
+	docker-compose up --build
 
+.PHONY: stop
+stop:
+	docker-compose down
