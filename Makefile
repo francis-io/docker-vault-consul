@@ -4,11 +4,11 @@ help: ## This help.
 .DEFAULT_GOAL := help
 
 .PHONY:start
-start: ##
-	@bash ./start.sh || true # dirty way to supress error if container does not exist
+start-dev: ##
+	@bash bin/start-dev.sh || true # dirty way to supress error if container does not exist
 
 .PHONY: stop
-stop:
-	@bash ./stop.sh || true # dirty way to supress error if container does not exist
+stop-dev:
+	@bash bin/stop-dev.sh || true # dirty way to supress error if container does not exist
 
 

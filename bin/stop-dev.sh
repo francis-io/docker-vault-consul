@@ -14,4 +14,4 @@ log() {
 }
 
 docker stop dev-vault > /dev/null 2>&1
-#log "Container stopped."
+log "Vault stopped."
