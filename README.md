@@ -19,3 +19,5 @@ I might extend this to a full HA consul setup in the future.
 
 [This](https://github.com/samrocketman/docker-compose-ha-consul-vault-ui) might be a good starting point. I want to rip out any local persistance, I think.
 https://github.com/testdrivenio/vault-consul-docker
+
+https://gitlab.com/kawsark/vault-agent-docker: docker vault agent example

@@ -61,7 +61,9 @@ main() {
     log "======================================="
     log ""
     log "$ export VAULT_ADDR=http://${VAULT_ADDR}"
-    log "To stop, run: 'make stop' or './stop.sh'"
+    log "Hint: $ curl \$VAULT_ADDR/v1/sys/health | jq"
+    log ""
+    log "To stop, run: 'make stop-dev' or './bin/stop-dev.sh'"
 }
 
 setup
