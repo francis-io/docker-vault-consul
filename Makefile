@@ -13,7 +13,7 @@ stop-dev:
 
 .PHONY: start
 start:
-	docker-compose up --build
+	docker-compose up --build --detach --remove-orphans --scale echo-server=2
 
 .PHONY: stop
 stop:

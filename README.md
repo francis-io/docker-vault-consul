@@ -20,4 +20,31 @@ I might extend this to a full HA consul setup in the future.
 [This](https://github.com/samrocketman/docker-compose-ha-consul-vault-ui) might be a good starting point. I want to rip out any local persistance, I think.
 https://github.com/testdrivenio/vault-consul-docker
 
+create demo app to pull creds?
+
+Create a cluster using raft backend
+
 https://gitlab.com/kawsark/vault-agent-docker: docker vault agent example
+
+* lint and format json and other types
+
+## Cheatsheet
+consul memebers
+consul operator raft list-peers
+
+## TODO
+Centralised place to load versions
+Can i use --scale? https://docs.docker.com/compose/reference/up/
+healthchecks: https://www.consul.io/api-docs/health https://www.consul.io/docs/discovery/checks
+## Credits
+* https://github.com/testdrivenio/vault-consul-docker
+* https://github.com/samrocketman/docker-compose-ha-consul-vault-ui
+* consul "The 'ui' field is deprecated. Use the 'ui_config.enabled' field instead."
+* nginx lb: https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
+* add actual clusters in a network, only expose lb https://levelup.gitconnected.com/load-balance-and-scale-node-js-containers-with-nginx-and-docker-swarm-9fc97c3cff81
+* traefik might be a better lb https://stackoverflow.com/a/54388725
+* SSL?
+* lint nginx file
+* review consul config. change datacentre, data dir...
+* https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
+* 
