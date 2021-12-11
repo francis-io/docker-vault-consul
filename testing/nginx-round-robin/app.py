@@ -1,5 +1,6 @@
 from flask import Flask
 import socket
+import os
 
 app = Flask(__name__)
 
@@ -7,8 +8,6 @@ app = Flask(__name__)
 def display_page():
     hostname = socket.gethostname()
     return socket.gethostbyname(hostname)
-    #return "hello"
-    #return render_template("index.html", IP=ip, HOST=hostname)
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT'))

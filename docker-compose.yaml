@@ -60,7 +60,7 @@ services:
 
   nginx:
     container_name: consul_lb
-    image: nginx:latest
+    image: nginx:alpine
     ports:
       - 8500:8500
     volumes:

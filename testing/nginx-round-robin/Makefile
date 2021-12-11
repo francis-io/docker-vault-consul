@@ -4,7 +4,7 @@ help: ## This help.
 .DEFAULT_GOAL := help
 
 start:
-	docker-compose up --build --detach --remove-orphans --scale echo-container=$(count)
+	docker-compose up --build --detach --remove-orphans --scale echo-container5000=$(count) --scale echo-container5001=$(count)
 
 	@bash scripts/print_ip.sh
 
