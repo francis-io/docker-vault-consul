@@ -7,4 +7,6 @@ listener "tcp" {
   tls_disable = 1
 }
 
+#log_level = debug  #Case is different in consul
+
 ui = true

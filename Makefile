@@ -14,7 +14,7 @@ stop-dev:
 .PHONY: start
 start:
 	# defaults to 2 extra consul nodes, giving a 3 node cluster
-	docker-compose up --build --detach --remove-orphans --scale consul-workers=$(or $(count), 2)
+	docker-compose up --build --detach --remove-orphans --scale consul-workers=$(or $(count), 2) --scale vault-workers=$(or $(count), 2)
 
 	@bash print_ip.sh
 

@@ -29,15 +29,23 @@ main() {
     # IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
     # log "$server $ curl ${IP}/v1/agent/members | jq | grep Addr"
 
-    server=consul
-    IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
-    log "$server $ curl ${IP}:8500"
-    log "$server $ curl ${IP}:8500/v1/agent/members | jq | grep Addr"
+    # server=consul
+    # IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
+    # log "$server $ curl ${IP}:8500"
+    # log "$server $ curl ${IP}:8500/v1/agent/members | jq | grep Addr"
+    echo "Traefik Proxy Dashboard: http://traefik.localhost"
 
-    server=vault
-    IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
-    log "$server $ curl ${IP}:8200"
-    log "$server $ http://${IP}:8200/ui"
+    consul_url="http://consul.localhost"
+    #echo "Consul: $ curl ${consul_url}"
+    echo "Consul Dashboard: ${consul_url}/ui"
+    echo "curl ${consul_url}/v1/agent/members | jq | grep Addr"
+
+    echo "Vault: http://vault.localhost/ui"
+
+    # server=vault
+    # IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
+    # log "$server $ curl ${IP}:8200"
+    # log "$server $ http://${IP}:8200/ui"
 
     #log "$ curl ${IP}:8500/v1/agent/members | jq | grep Addr"
 

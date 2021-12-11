@@ -28,6 +28,9 @@ https://gitlab.com/kawsark/vault-agent-docker: docker vault agent example
 
 * lint and format json and other types
 
+## Current Limitations
+* Vault to Consul traffic is not via the proxy (yet)
+
 ## Cheatsheet
 consul memebers
 consul operator raft list-peers
@@ -46,8 +49,17 @@ healthchecks: https://www.consul.io/api-docs/health https://www.consul.io/docs/d
 * traefik might be a better lb https://stackoverflow.com/a/54388725
 * SSL?
 * lint nginx file
-* review consul config. change datacentre, data dir...
+* review consul config. change datacenter, data dir...
 * https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
 * make ip and test scripts env agnostic. let make call when with a container name
 * read container versions from a central location
 * turn on UIs
+* todo: add dedicated traefik entrypoints for services
+* todo traefik dashboard https
+* vault operator init -key-shares=6 -key-threshold=3
+ * vault audit back end https://www.bogotobogo.com/DevOps/Docker/Docker-Vault-Consul.php
+
+TODO tomorrow
+auto unseal container
+centralise container versions
+go over todo list above
