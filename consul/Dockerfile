@@ -2,7 +2,7 @@
 FROM alpine:3.14
 
 # set consul version
-ENV CONSUL_VERSION 1.10.2
+ENV CONSUL_VERSION 1.11.0
 
 # create a new directory
 RUN mkdir /consul
@@ -23,7 +23,7 @@ RUN wget --quiet --output-document=/tmp/consul.zip https://releases.hashicorp.co
 ENV PATH="PATH=$PATH:$PWD/consul"
 
 # add the config file
-COPY ./config/consul-config.json /consul/config/config.json
+#COPY ./config/consul-config.json /consul/config/config.json
 
 # expose ports
 EXPOSE 8300 8400 8500 8600

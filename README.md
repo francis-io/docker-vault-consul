@@ -31,6 +31,7 @@ https://gitlab.com/kawsark/vault-agent-docker: docker vault agent example
 ## Cheatsheet
 consul memebers
 consul operator raft list-peers
+test hitting different consul servers: https://learn.hashicorp.com/tutorials/consul/load-balancing-envoy?in=consul/developer-mesh#default-load-balancing-policy
 
 ## TODO
 Centralised place to load versions
@@ -47,4 +48,4 @@ healthchecks: https://www.consul.io/api-docs/health https://www.consul.io/docs/d
 * lint nginx file
 * review consul config. change datacentre, data dir...
 * https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
-* 
+* make ip and test scripts env agnostic. let make call when with a container name
