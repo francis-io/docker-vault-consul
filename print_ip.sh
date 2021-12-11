@@ -29,10 +29,15 @@ main() {
     # IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
     # log "$server $ curl ${IP}/v1/agent/members | jq | grep Addr"
 
-    server=lb
+    server=consul
     IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
-    log "$server $ curl ${IP}"
-    log "$server $ curl ${IP}/v1/agent/members | jq | grep Addr"
+    log "$server $ curl ${IP}:8500"
+    log "$server $ curl ${IP}:8500/v1/agent/members | jq | grep Addr"
+
+    server=vault
+    IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
+    log "$server $ curl ${IP}:8200"
+    log "$server $ http://${IP}:8200/ui"
 
     #log "$ curl ${IP}:8500/v1/agent/members | jq | grep Addr"
 
