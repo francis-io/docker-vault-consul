@@ -1,6 +1,6 @@
 # Local Docker Vault and Consul Cluster
 
-These are some scripts to run Hashicorp Vault and a cluster of Consul servers for local development. Think of this an an extension of Vault dev mode, with a full storage cluster.
+These are some scripts to run Hashicorp Vault and a cluster of Consul servers, for local development. Think of this an an extension of Vault dev mode, with a full storage cluster.
 
 I created this to support my learning and preparation for the Hashicorp Vault certifications and general local testing.
 
@@ -27,11 +27,13 @@ totally stateless, by design
 ## Quick Start (Dev Mode)
 #TODO: change command to dev
 
-* `make start` OR `./start.sh` to start the vault container in dev mode and push it to the background.
-* `make stop` OR `./stop.sh` to kill any container called `dev-vault`
+* `make start-dev` OR `./scripts/start-dev.sh` to start the vault container in dev mode and push it to the background.
+* `make stop-dev` OR `./scripts/stop-dev.sh` to kill any container called `dev-vault`
 
 ## Future
 
+* auto create a non root user on startup
+* Bring additional vault servers into the cluster
 * Create demo app (maybe python) to pull limited lifetime database passwords
 * Create a cluster using raft backend instead of Consul
 * Demo Vault agent: https://gitlab.com/kawsark/vault-agent-docker

@@ -2,7 +2,7 @@
 
 # TODO: dont hardcode http
 
-# DEBUG=true can be set as env var
+# DEBUG: "true" - can be set as env var
 
 log() {
   echo "$(date +'%H:%M:%S'): $*" >&2
@@ -36,18 +36,30 @@ vault_status() {
     # I dont like case statements
     if [[ $vault_status == "503" ]]; then
         echo "sealed"
-        #exit 1
+
     elif [[ $vault_status == "501" ]]; then
         echo "not_initialized"
-        #exit 1
+
     elif [[ $vault_status == "429" ]]; then
         echo "unsealed_and_standby"
+
     else
-        echo "status is $vault_status"
+        echo "$vault_status"
     fi
 }
 
-# British note, I know it's initialse not initialize :-). It's been bugging me all day...
+wait_until_vault_starts() {
+    # Pass url:port
+    if [ ${DEBUG:-false} == 'true' ] ; then log "DEBUG: Waiting for vault to start..." ; fi
+
+    until [[ $(vault_status $1) != "000" ]]; do #TODO: fix hack
+        if [ ${DEBUG:-false} == 'true' ] ; then log "DEBUG: Waiting for vault..." ; fi
+        sleep 1
+    done
+
+    log "INFO: Vault has started."
+}
+
 vault_initialize() {
     # Pass url:port
     if [ ${DEBUG:-false} == 'true' ] ; then log "DEBUG: Attempting to initialize..." ; fi
@@ -55,7 +67,7 @@ vault_initialize() {
     while [[ $(vault_status $1) == "not_initialized" ]]; do
         curl --request POST --silent http://${1}/v1/sys/init \
             --data '{"secret_shares": 1, "secret_threshold": 1}' \
-            > /unseal-keys/unseal-keys.json # add to gitignore # TODO: create var for file location, env var
+            > /unseal-keys/unseal-keys.json # TODO: create var for file location, env var
 
         if [ ${DEBUG:-false} == 'true' ] ; then log "DEBUG: $(cat /unseal-keys/unseal-keys.json)" ; fi
     done
@@ -81,17 +93,6 @@ vault_unseal() {
     log "INFO: Vault unsealed successfully."
 }
 
-wait_for_url() {
-    log "INFO: Waiting for Vault to respond..."
-
-    until [[ $(curl --output /dev/null --silent --head --fail http://${1}/v1/sys/health); do
-        log '.'
-        sleep 1
-    done
-
-    log "INFO: Vault is alive."
-}
-
 setup() {
     if [ ${DEBUG:-false} == 'true' ] ; then log "DEBUG: Starting local setup..." ; fi
 
@@ -105,7 +106,7 @@ main() {
     VAULT=${VAULT_URL}:${VAULT_PORT} # TODO: should check these are set in env
 
     # Wait for vault to become active
-    wait_for_url "${VAULT}"
+    wait_until_vault_starts "${VAULT}"
 
     if [ ${DEBUG:-false} == 'true' ] ; then log "DEBUG: Vault status: $(vault_status $VAULT) " ; fi
     # Vault needs to be initialized and then unsealed.

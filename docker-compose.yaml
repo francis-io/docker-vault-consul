@@ -3,8 +3,6 @@ version: '3.7' # TODO: upgrade to 3.8
 services:
   proxy:
     container_name: traefik
-    networks:
-      - testing
     image: traefik:latest
     command:
       - "--log.level=DEBUG"
@@ -18,20 +16,14 @@ services:
       # Traefik dashboard
       - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.localhost`)"
       - "traefik.http.routers.traefik_dashboard.service=api@internal"
-      # - "traefik.http.routers.traefik_dashboard.entrypoints=web"
-      # - "traefik.http.routers.traefik_dashboard.middlewares=auth"
-      # - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
     ports:
       - 80:80
-      #- 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # So that Traefik can listen to Docker events
     restart: always
 
   vault:
     container_name: vault
-    networks:
-      - testing
     image: vault:1.9.0
     # build:
     #   context: ./vault
@@ -42,8 +34,8 @@ services:
       - ./vault/config:/vault/config
       - ./vault/policies:/vault/policies
     environment:
-      - VAULT_ADDR=http://127.0.0.1:8200
-      - VAULT_API_ADDR=http://127.0.0.1:8200
+      VAULT_ADDR: "http://127.0.0.1:8200"
+      VAULT_API_ADDR: "http://127.0.0.1:8200"
     command: "server"
     cap_add:
       - IPC_LOCK # https://www.vaultproject.io/docs/configuration#disable_mlock
@@ -51,17 +43,26 @@ services:
       - consul
     labels:
       - "traefik.enable=true"
-      #
       - "traefik.http.routers.vault.rule=Host(`vault.localhost`)"
       - "traefik.http.services.vault.loadbalancer.server.port=8200"
       - "traefik.http.routers.vault.entrypoints=web"
       - "traefik.http.routers.vault.service=vault"
-      # - "traefik.http.routers.consul.rule=Host(`consul_traffic.localhost`)"
-      # # could have traffic come in on 80/443 with diff url
-      # - "traefik.http.services.consul.loadbalancer.server.port=8500"
-      # - "traefik.http.routers.consul.entrypoints=consul"
-      # - "traefik.http.routers.consul.service=consul"
     restart: always
+
+  vault-auto-unseal:
+    container_name: vault-auto-unseal
+    build:
+      context: ./vault-auto-unseal
+      dockerfile: Dockerfile
+    environment:
+      VAULT_URL: "vault" # TODO: set somewhere central
+      VAULT_PORT: "8200"
+      DEBUG: "true"
+    volumes:
+      - ./.unseal-keys:/unseal-keys # key location mounted so other scripts can use
+    depends_on:
+      - vault
+
 
   #   #   context: ./vault
   #   #   dockerfile: Dockerfile
@@ -82,8 +83,6 @@ services:
 
   consul:
     container_name: consul
-    networks:
-      - testing
     # build:
     #   context: ./consul
     #   dockerfile: Dockerfile
@@ -106,16 +105,9 @@ services:
     #   context: ./consul
     #   dockerfile: Dockerfile
     image: consul:1.10
-    networks:
-      - testing
     command: agent -server -bind 0.0.0.0 -client 0.0.0.0 -join consul -config-file=/consul/config/config.json
     volumes:
       - ./consul/config/consul-config.json:/consul/config/config.json
     depends_on:
       - consul
     restart: always
-
-networks: # needed for vault-unseal-dev, remove
-  testing:
-    name: testing
-    #external: true

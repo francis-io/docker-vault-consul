@@ -3,26 +3,22 @@ help: ## This help.
 
 .DEFAULT_GOAL := help
 
+.PHONY: start
+start: ## Start a Vault instance with a Consul cluster behind. Defaults to a 3 node Consul cluster.
+	docker-compose up --build --detach --scale consul-workers=$(or $(count), 2)    # --scale vault-workers=$(or $(count), 2)
+	@bash scripts/return-cluster-info.sh
+
+.PHONY: stop
+stop: ## Stop the cluster.
+	docker-compose down
+
 .PHONY:start-dev
-start-dev: ##
-	@bash bin/start-dev.sh || true # dirty way to supress error if container does not exist
+start-dev: ## Start Vault in dev mode. Uses local storage.
+	@bash scripts/start-dev.sh
 
 .PHONY: stop-dev
-stop-dev:
-	@bash bin/stop-dev.sh || true # dirty way to supress error if container does not exist
-
-.PHONY: start
-start:
-	# defaults to 2 extra consul nodes, giving a 3 node cluster
-	docker-compose up --build --detach --remove-orphans --scale consul-workers=$(or $(count), 2) --scale vault-workers=$(or $(count), 2)
-
-	@bash print_ip.sh
-
-test:
-	#@bash test.sh
-
-stop:
-	docker-compose down #-v --rmi all --remove-orphans
+stop-dev: ## Stop the Vault dev cluster, if exists.
+	@bash scripts/stop-dev.sh
 
 clean:
 	docker system prune --all --force
