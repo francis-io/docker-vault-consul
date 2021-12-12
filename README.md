@@ -25,10 +25,10 @@ I also have a nice wrapper around a single instance of Vault dev mode for local 
 
 ## Quick Start
 
-* `make start` to start the cluster.
-* `make stop` to stop the cluster.
+* `make start` or `./scripts/start.sh` to start the cluster.
+* `make stop` or `./scripts/stop.sh` to stop the cluster.
 
-* You can scale up the (currently only Consul) cluster beyond the default 3 with something like `make start count=7`
+* You can scale up the (currently only Consul) cluster beyond the default 3 with something like `make start count=7` or `./scripts/start.sh 7`
 
 ### Dev mode
 
@@ -57,7 +57,7 @@ I also have a nice wrapper around a single instance of Vault dev mode for local 
 * Move Consul config to HCL
 * Enable Audit backends
 
-## Credits
+## Credits and Inspiration
 * https://github.com/testdrivenio/vault-consul-docker
 * https://github.com/samrocketman/docker-compose-ha-consul-vault-ui
 * nginx lb (deprecated): https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/

@@ -1,27 +1,6 @@
 version: '3.7'
 
 services:
-  proxy:
-    container_name: traefik
-    image: traefik:latest
-    command:
-      - "--log.level=DEBUG"
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    labels:
-      - "traefik.enable=true"
-      # Traefik dashboard
-      - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.localhost`)"
-      - "traefik.http.routers.traefik_dashboard.service=api@internal"
-    ports:
-      - 80:80
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock  # So that Traefik can listen to Docker events
-    restart: always
-
   vault:
     container_name: vault
     image: vault:${VAULT_VERSION}
@@ -92,4 +71,25 @@ services:
       - ./consul/config/consul-config.json:/consul/config/config.json
     depends_on:
       - consul
+    restart: always
+
+  proxy:
+    container_name: traefik
+    image: traefik:latest
+    command:
+      - "--log.level=DEBUG"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    labels:
+      - "traefik.enable=true"
+      # Traefik dashboard
+      - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik_dashboard.service=api@internal"
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # So that Traefik can listen to Docker events
     restart: always
