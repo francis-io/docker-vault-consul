@@ -3,12 +3,25 @@ help: ## This help.
 
 .DEFAULT_GOAL := help
 
-.PHONY:start
-start-dev: ##
-	@bash bin/start-dev.sh || true # dirty way to supress error if container does not exist
+.PHONY: start
+start: ## Start a Vault instance with a Consul cluster behind. Defaults to a 3 node Consul cluster.
+ifdef count
+	@bash scripts/start.sh $(count)
+else
+	@bash scripts/start.sh
+endif
 
 .PHONY: stop
-stop-dev:
-	@bash bin/stop-dev.sh || true # dirty way to supress error if container does not exist
+stop: ## Stop the cluster.
+	@bash scripts/stop.sh
 
+.PHONY:start-dev
+start-dev: ## Start Vault in dev mode. Uses local storage.
+	@bash scripts/start-dev.sh
 
+.PHONY: stop-dev
+stop-dev: ## Stop the Vault dev cluster, if exists.
+	@bash scripts/stop-dev.sh
+
+clean:
+	docker system prune --all --force

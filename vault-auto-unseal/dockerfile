@@ -1,0 +1,7 @@
+FROM alpine:3.15
+
+RUN apk add --no-cache --upgrade curl jq
+
+COPY vault-auto-unseal.sh /
+
+CMD ["sh", "vault-auto-unseal.sh"]
