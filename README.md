@@ -8,15 +8,14 @@ I also have a nice wrapper around a single instance of Vault dev mode for local 
 
 ## Features
 
-TODO:
-exposure on localhost for easy dns (windows users YMMV)
-UI
-Traefik
-auto unseal
-make wrapper
-configurable cluster sizes
-optional local container builds
-totally stateless, by design
+* Service exposure on localhost for easy DNS using Traefik (Windows users YMMV)
+* Dashboards activated on Vault and Consul
+* (Super insecure) Auto unseal for easy development
+* Configurable cluster sizes. Currently supports scaling consul from a single Consul node to how ever many you like
+* Read and load Vault policies from a directory (see `./vault/policies/`)
+* optional local container builds if you want to modify either Vault or Consul beyond mounting config (currently, just uncomment in the `docker-compose.yaml`)
+* Totally stateless (by design). You will always get a fresh environment
+* Control the version of Consul and Vault from the .env file
 
 ## Requirements
 
@@ -24,34 +23,40 @@ totally stateless, by design
 * Docker-compose
 * Make (optional)
 
-## Quick Start (Dev Mode)
-#TODO: change command to dev
+## Quick Start
+
+* `make start` to start the cluster.
+* `make stop` to stop the cluster.
+
+* You can scale up the (currently only Consul) cluster beyond the default 3 with something like `make start count=7`
+
+### Dev mode
 
 * `make start-dev` OR `./scripts/start-dev.sh` to start the vault container in dev mode and push it to the background.
 * `make stop-dev` OR `./scripts/stop-dev.sh` to kill any container called `dev-vault`
 
-## Future
+## Future Tasks
 
-* auto create a non root user on startup
+* Auto create a non root user on startup
 * Bring additional vault servers into the cluster
 * Create demo app (maybe python) to pull limited lifetime database passwords
 * Create a cluster using raft backend instead of Consul
 * Demo Vault agent: https://gitlab.com/kawsark/vault-agent-docker
 * Investigate docker swarm to see if it gets round the dns resolution issues in compose
-* Container healthchecks: Might be overkill and cause visual clutter. https://www.consul.io/api-docs/health https://www.consul.io/docs/discovery/checks
 * lint and format json and other types
 * Move the auto unseal code to something nicer, like python
 * SSL everywhere
+* Enable licenses to test Enterprise features
 
 ## Current Limitations
 
-* Vault to Consul traffic is only sent to a single instance due to docker/compose DNS limitations
+* Vault to Consul traffic is only sent to a single instance due to docker/compose DNS limitations. Swarm might be a solution to this.
 * Currently everything is running un-encrypted
-* only expects one unseal key
+* Assumes one unseal key
 
 ## TODO
 Centralized place to load versions
-enable licenses
+
 
 ## Credits
 * https://github.com/testdrivenio/vault-consul-docker
@@ -67,8 +72,3 @@ enable licenses
 * todo traefik dashboard https
 * vault operator init -key-shares=6 -key-threshold=3
  * vault audit back end https://www.bogotobogo.com/DevOps/Docker/Docker-Vault-Consul.php
-
-TODO tomorrow
-auto unseal container
-centralise container versions
-go over todo list above

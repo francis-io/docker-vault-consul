@@ -5,12 +5,11 @@ help: ## This help.
 
 .PHONY: start
 start: ## Start a Vault instance with a Consul cluster behind. Defaults to a 3 node Consul cluster.
-	docker-compose up --build --detach --scale consul-workers=$(or $(count), 2)    # --scale vault-workers=$(or $(count), 2)
-	@bash scripts/return-cluster-info.sh
+	@bash scripts/start.sh $(or $(count), 2)
 
 .PHONY: stop
 stop: ## Stop the cluster.
-	docker-compose down
+	@bash scripts/stop.sh
 
 .PHONY:start-dev
 start-dev: ## Start Vault in dev mode. Uses local storage.

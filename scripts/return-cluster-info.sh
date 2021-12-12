@@ -60,11 +60,11 @@ main() {
   log "Traefik Proxy Dashboard: http://traefik.localhost/dashboard/#/"
   log ""
 
-  log "Consul Dashboard: ${consul_url}/ui"
+  log "Consul Dashboard/UI: ${consul_url}/ui"
   log "Try: $ curl ${consul_url}/v1/agent/members"
   log ""
 
-  log "Vault UI: ${vault_url}/ui"
+  log "Vault Dashboard/UI: ${vault_url}/ui"
   log "Try: $ curl ${vault_url}/v1/sys/health"
   log ""
   log "Vault Unseal Key: ${unseal_key}"
