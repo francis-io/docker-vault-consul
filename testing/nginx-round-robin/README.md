@@ -11,3 +11,16 @@ Change count to increase or decrease containers. `make start count=6 && make tes
 ## Credits
 
 * I used stripped down python code from here: https://github.com/sbrakl/flask
+
+```
+ # nginx_loadbalancer:
+  #   container_name: lb
+  #   image: nginx:alpine
+  #   ports:
+  #     - 8500:8500
+  #   volumes:
+  #     - ./nginx-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+  #   depends_on:
+  #     - consul
+  #     - consul-workers
+```

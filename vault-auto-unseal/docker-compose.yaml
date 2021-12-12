@@ -1,0 +1,22 @@
+version: '3.7' # TODO: upgrade to 3.8
+
+services:
+  unseal:
+    container_name: unseal
+    networks:
+      - testing
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      VAULT_URL: "vault" # TODO set somewhere central
+      VAULT_PORT: "8200"
+      DEBUG: "true"
+    volumes:
+      - ./unseal-keys:/unseal-keys # TODO: add to gitignore
+    restart: always
+
+networks:
+  testing:
+    external:
+      name: testing # Needed if in different compose stacks

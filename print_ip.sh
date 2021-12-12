@@ -33,13 +33,15 @@ main() {
     # IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $server)
     # log "$server $ curl ${IP}:8500"
     # log "$server $ curl ${IP}:8500/v1/agent/members | jq | grep Addr"
-    echo "Traefik Proxy Dashboard: http://traefik.localhost"
+    log "Traefik Proxy Dashboard: http://traefik.localhost"
+    log ""
 
     consul_url="http://consul.localhost"
     #echo "Consul: $ curl ${consul_url}"
     echo "Consul Dashboard: ${consul_url}/ui"
     echo "curl ${consul_url}/v1/agent/members | jq | grep Addr"
 
+    log ""
     echo "Vault: http://vault.localhost/ui"
 
     # server=vault

@@ -1,4 +1,14 @@
+FROM alpine:3.15
+
+RUN apk add --no-cache --upgrade curl jq
+
+COPY vault-auto-unseal.sh /
+
+#ENTRYPOINT ["sh"]
+CMD ["sh", "vault-auto-unseal.sh"]
+
 # TODO
+# This should really be in Python
 # container somehow keeps checking if vault is sealed
 #curl http://vault.localhost/v1/sys/seal-status
 #{"type":"shamir","initialized":false,"sealed":true,"t":0,"n":0,"progress":0,"nonce":"","version":"1.9.0","migration":false,"recovery_seal":false,"storage_type":"consul"}
