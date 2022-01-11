@@ -5,4 +5,4 @@ vault/logs/*
 consul/data/*
 !consul/data/.gitkeep
 
-./.unseal-keys
+.unseal-keys

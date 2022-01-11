@@ -8,7 +8,7 @@ I also have a nice wrapper around a single instance of Vault dev mode for local 
 
 ## Features
 
-* Service exposure on localhost for easy DNS using Traefik (Windows users YMMV)
+* Service exposure on a domain for easy DNS using Traefik (Windows users YMMV)
 * Dashboards activated on Vault and Consul
 * (Super insecure) Auto unseal for easy development
 * Configurable cluster sizes. Currently supports scaling consul from a single Consul node to how ever many you like
@@ -29,6 +29,14 @@ I also have a nice wrapper around a single instance of Vault dev mode for local 
 * `make stop` or `./scripts/stop.sh` to stop the cluster.
 
 * You can scale up the (currently only Consul) cluster beyond the default 3 with something like `make start count=7` or `./scripts/start.sh 7`
+
+## Specific Mac instructions
+```
+brew install docker --cask
+brew install docker-compose make
+(start docker service)
+make start
+```
 
 ### Dev mode
 

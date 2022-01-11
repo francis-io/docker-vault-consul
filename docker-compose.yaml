@@ -22,7 +22,7 @@ services:
       - consul
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.vault.rule=Host(`vault.localhost`)"
+      - "traefik.http.routers.vault.rule=Host(`vault.${DOMAIN}`)"
       - "traefik.http.services.vault.loadbalancer.server.port=8200"
       - "traefik.http.routers.vault.entrypoints=web"
       - "traefik.http.routers.vault.service=vault"
@@ -54,7 +54,7 @@ services:
       - ./consul/config/consul-config.json:/consul/config/config.json
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.consul.rule=Host(`consul.localhost`)"
+      - "traefik.http.routers.consul.rule=Host(`consul.${DOMAIN}`)"
       - "traefik.http.services.consul.loadbalancer.server.port=8500"
       - "traefik.http.routers.consul.entrypoints=web"
       - "traefik.http.routers.consul.service=consul"
@@ -86,7 +86,7 @@ services:
     labels:
       - "traefik.enable=true"
       # Traefik dashboard
-      - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.traefik_dashboard.rule=Host(`traefik.${DOMAIN}`)"
       - "traefik.http.routers.traefik_dashboard.service=api@internal"
     ports:
       - 80:80

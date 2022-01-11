@@ -43,8 +43,11 @@ wait_until_vault_is_unsealed() {
 main() {
   #DEBUG=true # TODO: dont set this here
 
-  consul_url="http://consul.localhost" # TODO: dont hardcode here
-  vault_url="http://vault.localhost"
+  # Import all vars. Used for DOMAIN
+  export $(grep -v '^#' .env | xargs)
+
+  consul_url="http://consul.${DOMAIN}" # TODO: dont hardcode here
+  vault_url="http://vault.${DOMAIN}"
 
   wait_until_vault_is_unsealed ${vault_url}
 
@@ -57,7 +60,7 @@ main() {
 
   log "======================================="
   log ""
-  log "Traefik Proxy Dashboard: http://traefik.localhost/dashboard/#/"
+  log "Traefik Proxy Dashboard: http://traefik.${DOMAIN}/dashboard/#/"
   log ""
 
   log "Consul Dashboard/UI: ${consul_url}/ui"
@@ -71,6 +74,8 @@ main() {
   log "Vault Root Token: ${root_token}"
   log ""
   log "======================================="
+  log ""
+  log "Cluster started! CTRL C to stop..."
 }
 
 main
