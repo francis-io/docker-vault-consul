@@ -75,7 +75,7 @@ main() {
   log ""
   log "======================================="
   log ""
-  log "Cluster started! CTRL C to stop..."
+  log "Cluster started! Run "make stop" to stop and cleanup."
 }
 
 main
